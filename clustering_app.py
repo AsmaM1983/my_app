@@ -8,11 +8,11 @@ import pandas as pd
 st.title('Clustering des Clients')
 
 # Charger le fichier de données
-data_file = st.file_uploader("Téléchargez le fichier Excel", type=["xls", "xlsx"])
+data_file = st.file_uploader("Téléchargez le fichier CSV", type=["csv"])
 
 if data_file is not None:
     # Lire le fichier de données
-    dataset = pd.read_excel(data_file)
+    dataset = pd.read_csv(data_file)
 
     # Prétraiter les données comme vous l'avez fait précédemment pour calculer recency, Frequency, et Monetary_value
     #afficher colonne Monetary_value
