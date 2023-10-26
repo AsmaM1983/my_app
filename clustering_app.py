@@ -1,10 +1,6 @@
 
 
 import pickle
-# Charger le modèle K-Means préalablement entraîné
-with open('kmeans_model.pkl', 'rb') as model_file:
-    k_means = pickle.load(model_file)
-
 import streamlit as st
 import pandas as pd
 
@@ -41,7 +37,7 @@ if data_file is not None:
     # Sélectionner la date maximale entre les deux
     max_date = max(last_max_date, max_invoice_date)
 
-    rfm_final['recency'] = (max_date - dataset.groupby('CustomerID')['InvoiceDate'].transform('max')).dt.days
+    rfm_final['recency'] = (max_date - dataset.groupby('CustomerID')['InvoiceDate'].transform('m+ax')).dt.days
 
     #Scaling
     from sklearn.preprocessing import MinMaxScaler
@@ -53,6 +49,9 @@ if data_file is not None:
 
     # Sélectionner les caractéristiques pertinentes pour le clustering
     X = rfm_df_scaled[['recency', 'Frequency', 'Monetary_value']]
+
+    # Charger le modèle K-Means préalablement entraîné
+    k_means=pickle.load(open('model_kmeans.pkl','rb'))
 
     # Attribuer des clusters aux acheteurs
     clusters = k_means.predict(X)
