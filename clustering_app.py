@@ -3,7 +3,6 @@
 import pickle
 import streamlit as st
 import pandas as pd
-from sklearn.cluster import KMeans
 
 # Titre de l'application
 st.title('Clustering des Clients')
