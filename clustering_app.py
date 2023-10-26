@@ -1,7 +1,7 @@
 
 
 import pickle
-import openpyxl
+pip install openpyxl
 import streamlit as st
 import pandas as pd
 from sklearn.cluster import KMeans
