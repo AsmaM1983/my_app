@@ -2,8 +2,8 @@
 
 import pickle
 # Charger le modèle K-Means préalablement entraîné
-pickle.dump(k_means_3,open('model_kmeans.pkl','wb'))
-k_means=pickle.load(open('model_kmeans.pkl','rb'))
+with open('kmeans_model.pkl', 'rb') as model_file:
+    k_means = pickle.load(model_file)
 
 import streamlit as st
 import pandas as pd
