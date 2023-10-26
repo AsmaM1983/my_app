@@ -3,7 +3,6 @@
 import pickle
 import streamlit as st
 import pandas as pd
-streamlit deploy clustering_app.py
 
 # Titre de l'application
 st.title('Clustering des Clients')
