@@ -48,7 +48,7 @@ if dataframes:
     st.write(dataset)
 
 
-    # Prétraiter les données comme vous l'avez fait précédemment pour calculer recency, Frequency, et Monetary_value
+    # Prétraiter les données pour calculer recency, Frequency, et Monetary_value
     #afficher colonne Monetary_value
     dataset['Monetary_value']=dataset['Quantity']*dataset['UnitPrice']
     dataset_m=dataset.groupby('CustomerID')['Monetary_value'].sum()
@@ -86,13 +86,13 @@ if dataframes:
     rfm_df_scaled.columns = ['Monetary_value', 'Frequency', 'recency']
 
     # Sélectionner les caractéristiques pertinentes pour le clustering
-    X = rfm_df_scaled[['recency', 'Frequency', 'Monetary_value']]
+    DF = rfm_df_scaled[['recency', 'Frequency', 'Monetary_value']]
 
     # Charger le modèle K-Means préalablement entraîné
     k_means=pickle.load(open('model_kmeans.pkl','rb'))
 
     # Attribuer des clusters aux acheteurs
-    clusters = k_means.predict(X)
+    clusters = k_means.predict(DF)
 
     # Ajouter les étiquettes des clusters attribués en tant que colonne au DataFrame de données
     rfm_final['Cluster'] = clusters
