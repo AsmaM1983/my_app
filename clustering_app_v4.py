@@ -81,6 +81,10 @@ if dataframes:
     # Appliquez la mise à l'échelle aux colonnes sélectionnées
     rfm_df_scaled= scaler.fit_transform(rfm_final[cols_to_scale])
 
+    # convertir rfm_df_scaled en dataframe
+    rfm_df_scaled = pd.DataFrame(rfm_df_scaled)
+    rfm_df_scaled.columns = ['Monetary_value', 'Frequency', 'recency']
+
     # Sélectionner les caractéristiques pertinentes pour le clustering
     X = rfm_df_scaled[['recency', 'Frequency', 'Monetary_value']]
 
