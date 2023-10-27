@@ -88,7 +88,10 @@ if dataframes:
     # Sélectionner les caractéristiques pertinentes pour le clustering
     DF = rfm_df_scaled[['recency', 'Frequency', 'Monetary_value']]
 
-    # Charger le modèle K-Means préalablement entraîné
+# Créer un bouton pour exécuter le modèle K-Means
+if st.button("Exécuter le modèle K-Means"):
+    
+# Charger le modèle K-Means préalablement entraîné
     k_means=pickle.load(open('model_kmeans.pkl','rb'))
 
     # Attribuer des clusters aux acheteurs
@@ -98,6 +101,6 @@ if dataframes:
     rfm_final['Cluster'] = clusters
 
 # Afficher le cluster pour chaque CustomerID
-st.subheader('Clusters attribués aux clients :')
-for customer_id, cluster in zip(rfm_final['CustomerID'], rfm_final['Cluster']):
-    st.write(f"Le cluster du Customer ID = '{customer_id}' est Cluster {cluster}")
+    st.subheader('Clusters attribués aux clients :')
+    for customer_id, cluster in zip(rfm_final['CustomerID'], rfm_final['Cluster']):
+        st.write(f"Le cluster du Customer ID = '{customer_id}' est Cluster {cluster}")
