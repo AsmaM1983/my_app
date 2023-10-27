@@ -59,7 +59,7 @@ if st.button("Exécuter le modèle K-Means"):
     # Sélectionner la date maximale entre les deux
     max_date = max(last_max_date, max_invoice_date)
 
-    rfm_final['recency'] = (max_date - dataset.groupby('CustomerID')['InvoiceDate'].transform('m+ax')).dt.days
+    rfm_final['recency'] = (max_date - dataset.groupby('CustomerID')['InvoiceDate'].transform('max')).dt.days
 
     #Scaling
     from sklearn.preprocessing import MinMaxScaler
