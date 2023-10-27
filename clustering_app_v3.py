@@ -46,7 +46,7 @@ for i in range(num_rows):
 if dataframes:
     st.subheader('DataFrame créé à partir des données saisies :')
     dataset = pd.concat(dataframes, ignore_index=True)
-    st.write(dataset)
+st.write(dataset)
 
  # Prétraiter les données comme vous l'avez fait précédemment pour calculer recency, Frequency, et Monetary_value
 #afficher colonne Monetary_value
