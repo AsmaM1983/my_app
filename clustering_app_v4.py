@@ -95,9 +95,9 @@ if dataframes:
     clusters = k_means.predict(X)
 
     # Ajouter les étiquettes des clusters attribués en tant que colonne au DataFrame de données
-    dataset['Cluster'] = clusters
+    rfm_final['Cluster'] = clusters
 
     # Afficher le cluster pour chaque CustomerID
     st.subheader('Clusters attribués aux clients :')
-    for customer_id, cluster in zip(dataset['CustomerID'], dataset['Cluster']):
+    for customer_id, cluster in zip(rfm_final['CustomerID'], rfm_final['Cluster']):
         st.write(f"Le cluster du Customer ID = '{customer_id}' est Cluster {cluster}")
