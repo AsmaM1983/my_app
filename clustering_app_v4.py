@@ -92,7 +92,7 @@ if dataframes:
 if st.button("Exécuter le modèle K-Means"):
     
 # Charger le modèle K-Means préalablement entraîné
-    k_means=pickle.load(open('model_kmeans.pkl','rb'))
+    k_means=pickle.load(open("model_kmeans.pkl","rb"))
 
     # Attribuer des clusters aux acheteurs
     clusters = k_means.predict(DF)
