@@ -24,7 +24,7 @@ for i in range(num_rows):
     quantity = st.number_input(f"Ligne {i + 1} - Quantity :", min_value=0)
     invoice_date = st.date_input(f"Ligne {i + 1} - InvoiceDate :")
     unit_price = st.number_input(f"Ligne {i + 1} - UnitPrice :", min_value=0.0)
-    customer_id = st.number_input(f"Ligne {i + 1} - CustomerID :")
+    customer_id = st.text_input(f"Ligne {i + 1} - CustomerID :")
     country = st.text_input(f"Ligne {i + 1} - Country :")
 
     # Ajoutez les données dans une ligne de DataFrame
@@ -86,16 +86,16 @@ if dataframes:
     rfm_df_scaled.columns = ['Monetary_value', 'Frequency', 'recency']
 
     # Sélectionner les caractéristiques pertinentes pour le clustering
-    DF = rfm_df_scaled[['recency', 'Frequency', 'Monetary_value']]
+    X = rfm_df_scaled[['recency', 'Frequency', 'Monetary_value']]
 
 # Créer un bouton pour exécuter le modèle K-Means
 if st.button("Exécuter le modèle K-Means"):
     
 # Charger le modèle K-Means préalablement entraîné
-    k_means=pickle.load(open("model_kmeans.pkl","rb"))
+    k_means=pickle.load(open('model_kmeans.pkl','rb'))
 
     # Attribuer des clusters aux acheteurs
-    clusters = k_means.predict(DF)
+    clusters = k_means.predict(X)
 
     # Ajouter les étiquettes des clusters attribués en tant que colonne au DataFrame de données
     rfm_final['Cluster'] = clusters
