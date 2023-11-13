@@ -1,15 +1,20 @@
 import streamlit as st
-import requests
 from PIL import Image
 import numpy as np
 import tensorflow as tf
 from io import BytesIO
 
-# Charger le modèle TensorFlow Lite depuis le fichier .tflite sur GitHub
-model_url = "https://github.com/AsmaM1983/my_app/raw/main/model_VGG16.tflite"
-model_content = requests.get(model_url).content
-model = tf.lite.Interpreter(model_content=model_content)
-model.allocate_tensors()
+# Charger le modèle TensorFlow Lite depuis le fichier TFLite sur GitHub
+model_url = "https://github.com/AsmaM1983/my_app/blob/main/model_VGG16.tflite"
+model_path = tf.keras.utils.get_file("model_VGG16.tflite", model_url)
+
+# Charger le modèle TFLite
+interpreter = tf.lite.Interpreter(model_path=model_path)
+interpreter.allocate_tensors()
+
+# Obtenir les détails du modèle
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
 def predict_image(img):
     # Redimensionner l'image à la taille attendue par le modèle (224, 224)
@@ -19,20 +24,16 @@ def predict_image(img):
     img_array = np.expand_dims(img_array, axis=0)
     img_array = img_array / 255.0
 
-    # Obtenir les détails des tenseurs d'entrée et de sortie
-    input_details = model.get_input_details()
-    output_details = model.get_output_details()
+    # Entrée du modèle
+    interpreter.set_tensor(input_details[0]['index'], img_array)
 
-    # Remplir le tenseur d'entrée avec les données de l'image
-    model.set_tensor(input_details[0]['index'], img_array)
+    # Exécutez l'interpréteur
+    interpreter.invoke()
 
-    # Effectuer l'inférence
-    model.invoke()
+    # Obtenez la sortie du modèle
+    prediction = interpreter.get_tensor(output_details[0]['index'])
 
-    # Obtenir les prédictions à partir du tenseur de sortie
-    predictions = model.get_tensor(output_details[0]['index'])
-
-    if predictions[0, 0] > 0.5:
+    if prediction[0, 0] > 0.5:
         return 'Dog'
     else:
         return 'Cat'
@@ -48,3 +49,5 @@ if uploaded_file is not None:
     # Faire une prédiction avec le modèle
     result = predict_image(image)
     st.write(f"Prediction: {result}")
+
+
