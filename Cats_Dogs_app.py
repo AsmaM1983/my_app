@@ -1,26 +1,13 @@
 import streamlit as st
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
+import requests
 from PIL import Image
 import numpy as np
 import tensorflow as tf
 from io import BytesIO
 
-# Configurer PyDrive pour accéder à Google Drive
-gauth = GoogleAuth()
-gauth.LocalWebserverAuth()  # La première fois que vous exécutez cela, il vous redirigera vers une URL pour autoriser l'accès à Google Drive
-drive = GoogleDrive(gauth)
-
-# ID du fichier .tflite sur Google Drive
-file_id = "13tTHxrhol_iaEBS0qx_FFwX7JEJo0S2f"
-
-# Télécharger le fichier .tflite à partir de Google Drive
-file = drive.CreateFile({'id': file_id})
-file.GetContentFile('model_VGG16.tflite')
-
-# Charger le modèle TensorFlow Lite
-interpreter = tf.lite.Interpreter(model_path='model_VGG16.tflite')
-interpreter.allocate_tensors()
+# Charger le modèle Keras depuis le fichier SavedModel sur GitHub
+model_url = "https://github.com/AsmaM1983/my_app/blob/main/model_VGG16.tflite"
+model = tf.keras.models.load_model(model_url)
 
 def predict_image(img):
     # Redimensionner l'image à la taille attendue par le modèle (224, 224)
@@ -30,18 +17,9 @@ def predict_image(img):
     img_array = np.expand_dims(img_array, axis=0)
     img_array = img_array / 255.0
 
-    # Préparer l'entrée pour le modèle TensorFlow Lite
-    input_tensor_index = interpreter.get_input_details()[0]['index']
-    interpreter.set_tensor(input_tensor_index, img_array)
+    prediction = model.predict(img_array)
 
-    # Exécuter l'inférence
-    interpreter.invoke()
-
-    # Obtenir la sortie du modèle TensorFlow Lite
-    output = interpreter.tensor(interpreter.get_output_details()[0]['index'])
-    prediction = output()[0]
-
-    if prediction > 0.5:
+    if prediction[0, 0] > 0.5:
         return 'Dog'
     else:
         return 'Cat'
