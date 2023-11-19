@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from PIL import Image
 import numpy as np
-import tensorflow as tf
+import tensorflow as tflite
 from io import BytesIO
 
 # Fonction pour charger le modèle depuis GitHub
@@ -40,6 +40,7 @@ def predict_image(img, model):
 model = load_model()
 
 # Interface utilisateur Streamlit
+st.image("http://www.ehtp.ac.ma/images/lo.png")
 st.title("Image Classifier - Cat or Dog")
 
 uploaded_file = st.file_uploader("Choose a file", type=["jpg", "jpeg", "png"])
@@ -50,4 +51,9 @@ if uploaded_file is not None:
 
     # Faire une prédiction avec le modèle
     result = predict_image(image, model)
-    st.write(f"Prediction: {result}")
+    
+    # Afficher la prédiction en mettant en évidence le résultat
+    if result == 'Dog':
+        st.success("Prediction: Dog 🐶")
+    else:
+        st.success("Prediction: Cat 🐱")
