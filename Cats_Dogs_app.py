@@ -40,7 +40,6 @@ def predict_image(img, model):
 model = load_model()
 
 # Interface utilisateur Streamlit
-st.image("http://www.ehtp.ac.ma/images/lo.png")
 st.title("Image Classifier - Cat or Dog")
 
 uploaded_file = st.file_uploader("Choose a file", type=["jpg", "jpeg", "png"])
@@ -50,3 +49,5 @@ if uploaded_file is not None:
     st.image(image, caption="Uploaded Image", use_column_width=True)
 
     # Faire une prédiction avec le modèle
+    result = predict_image(image, model)
+    st.write(f"Prediction: {result}")
