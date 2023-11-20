@@ -48,7 +48,7 @@ def predict_image(img, model):
 model = load_model()
 
 # Interface utilisateur Streamlit
-st.image("https://github.com/AsmaM1983/my_app/blob/main/LogoEHTP.jpg")
+st.image("https://raw.githubusercontent.com/AsmaM1983/my_app/main/LogoEHTP.jpg")
 st.title("Image Classifier - Cat or Dog")
 
 uploaded_file = st.file_uploader("Choose a file", type=["jpg", "jpeg", "png"])
