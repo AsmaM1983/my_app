@@ -7,6 +7,7 @@ from io import BytesIO
 import tempfile
 
 # Fonction pour charger le modèle depuis GitHub
+@st.cache(allow_output_mutation=True)
 def load_model():
     model_url = "https://github.com/AsmaM1983/my_app/raw/main/model_VGG16.tflite"
     model_content = requests.get(model_url).content
