@@ -5,3 +5,4 @@ numpy
 tensorflow
 azureml
 python3.11
+python
