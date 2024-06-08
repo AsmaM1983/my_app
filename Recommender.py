@@ -8,8 +8,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Charger les données et les modèles
-movies_df = pd.read_csv('movies.csv')  # Assume a CSV with movie details
-ratings_df = pd.read_csv('ratings.csv')  # Assume a CSV with user ratings
+movies_df = pd.read_csv('movies_metadata.csv')  # Assume a CSV with movie details
+ratings_df = pd.read_csv('ratings_small.csv')  # Assume a CSV with user ratings
 with open('best_algo_model.pkl', 'rb') as f:
     algo_model = pickle.load(f)
 
